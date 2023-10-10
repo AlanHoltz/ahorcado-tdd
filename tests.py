@@ -6,7 +6,7 @@ class Test(unittest.TestCase):
 
    def test_letra_pertenece_y_adivinar(self):
       ahorcado = Ahorcado("palabra")
-      self.assertTrue(ahorcado.letra_pertenece("x"))
+      self.assertTrue(ahorcado.letra_pertenece("b"))
 
    def test_letra_pertenece_y_errar(self):
       ahorcado = Ahorcado("palabra")
