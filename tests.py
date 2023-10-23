@@ -2,7 +2,7 @@ import unittest
 from ahorcado import Ahorcado
 class Test(unittest.TestCase):
 
-# Comment
+# Comment test
 
    def test_letra_pertenece_y_adivinar(self):
       ahorcado = Ahorcado("palabra")
