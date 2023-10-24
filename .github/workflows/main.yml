@@ -19,7 +19,7 @@ jobs:
         python-version: 3.8
 
     - name: Run unittest
-      run: python ./ahorcado-back/ahorcado_unittests.py
+      run: python \ahorcado-back\ahorcado_unittests.py
       
   sonarcloud:
       name: SonarCloud
