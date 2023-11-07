@@ -34,40 +34,47 @@ jobs:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     
-  allure:
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v3
+  autotests:
+    name: Run tests and generate Allure Report
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
 
-        - name: Set up JDK
-          uses: actions/setup-java@v3
-          with:
-            distribution: zulu
-            java-version: 17
+      - name: Set up Python 3.x
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
 
-        - name: Run tests
-          run: ./gradlew clean test
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
-        - name: Load test report history
-          uses: actions/checkout@v3
-          if: always()
-          continue-on-error: true
-          with:
-            ref: gh-pages
-            path: gh-pages
 
-        - name: Build test report
-          uses: simple-elf/allure-report-action@v1.7
-          if: always()
-          with:
-            gh_pages: gh-pages
-            allure_history: allure-history
-            allure_results: build/allure-results
+      - name: Run Test
+        if: always()
+        run: behave -f allure_behave.formatter:AllureFormatter -o automation/reports automation/features
+        continue-on-error: true
 
-        - name: Publish test report
-          uses: peaceiris/actions-gh-pages@v3
-          if: always()
-          with:
-            github_token: ${{ secrets.GITHUB_TOKEN }}
-            publish_branch: gh-pages
-            publish_dir: allure-history
+      - name: Get Allure history
+        uses: actions/checkout@v3
+        if: always()
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Allure Report action from marketplace
+        uses: simple-elf/allure-report-action@v1.7
+        if: always()
+        with:
+          allure_results: automation/reports
+          allure_history: automation/reports
+
+      - name: Deploy report to Github Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v2
+        env:
+          PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PUBLISH_BRANCH: gh-pages
+          PUBLISH_DIR: automation/reports
