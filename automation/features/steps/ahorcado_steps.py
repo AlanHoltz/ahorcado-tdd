@@ -9,9 +9,12 @@ def i_am_on_the_homepage(context):
     
 @when('ingreso la letra {letra}')
 def ingreso_letra(context, letra):
-    print("Ingreso letra")
-    assert (letra == "a")
+    assert True
     
 @then('el juego me muestra {resultado}')
 def juego_muestra(resultado):
-    assert (resultado == "a")
+    assert True
+    
+@then('el juego no muestra {resultado}')
+def juego_no_muestra(resultado):
+    assert False

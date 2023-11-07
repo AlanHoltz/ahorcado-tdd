@@ -8,4 +8,4 @@ Feature: Ahorcado
     Scenario: My Scenario fail
         Given I open ahorcado page
         When ingreso la letra "b"
-        Then el juego me muestra "b"
+        Then el juego no muestra "b"
