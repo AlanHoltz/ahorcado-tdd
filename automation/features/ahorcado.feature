@@ -4,3 +4,8 @@ Feature: Ahorcado
         Given I open ahorcado page
         When ingreso la letra "a"
         Then el juego me muestra "a"
+    
+    Scenario: My Scenario fail
+        Given I open ahorcado page
+        When ingreso la letra "b"
+        Then el juego me muestra "b"
