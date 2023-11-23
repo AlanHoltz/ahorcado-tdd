@@ -2,6 +2,17 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
+    position: relative;
+}
+
+.game .leave_game_button{
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .game .hangman_status{
