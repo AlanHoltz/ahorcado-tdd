@@ -12,6 +12,27 @@ class Ahorcado:
         self.estado = self.ESTADOS["EN_JUEGO"]
         self.vidas = 6
 
+    @classmethod
+    def from_dict(cls,dict):
+        instance = Ahorcado("RANDOM")
+        instance.set_word(dict['palabra'])
+        instance.set_slots(dict['slots'])
+        instance.set_estado(dict['estado'])
+        instance.set_vidas(dict['vidas'])
+        return instance
+
+    def set_word(self,word:str):
+        self.palabra = word
+
+    def set_slots(self,slots:str):
+        self.slots = slots
+
+    def set_estado(self,status: int):
+        self.estado = status
+
+    def set_vidas(self,hp: int):
+        self.vidas = hp
+
     def loop_principal(self):
             while(self.estado == self.ESTADOS["EN_JUEGO"]):
                 letra = input("Ingrese letra: ")
@@ -52,10 +73,6 @@ class Ahorcado:
 
     def inicializar_espacios(self):
         return ("_ " * len(self.palabra)).rstrip()
-    
-    # def actualizar_estado(self, letra):
-    
-    # def juego_perdido(self):
     
     def restar_vidas(self):
         self.vidas -= 1
