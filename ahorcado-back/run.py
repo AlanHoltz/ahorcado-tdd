@@ -5,6 +5,8 @@ from datetime import datetime, timedelta
 from ahorcado import Ahorcado
 from flask_cors import CORS
 from datetime import datetime
+from words import WORDS
+from random import choice
 
 app = Flask(__name__)
 CORS(app)
@@ -23,12 +25,13 @@ def new_game():
     if len(ip_sessions) != 0:
         return {"error": "You can't have more than one running session"}, 403
 
-    instance = Ahorcado('hola')
+    instance = Ahorcado(choice(WORDS).lower())
 
     new_game_obj = {
         'startedIn': datetime.now().isoformat(),
         'expiresIn': (datetime.now() + timedelta(minutes=PLAYING_TIME)).isoformat(),
         'tries': 0,
+        'used_chars': [],
         'instance': instance.__dict__,
         'ip': ip,
     }
@@ -63,7 +66,7 @@ def del_game(game_id):
 
     return {"deleted": True}, 200
 
-
+        
 @app.route("/current_game/<game_id>", methods=["GET", "POST"])
 def current_game(game_id):
 
@@ -94,8 +97,8 @@ def current_game(game_id):
             del current_game["instance"]["palabra"]
             del current_game["ip"]
         elif instance.estado == instance.ESTADOS["DERROTA"]:
-                defeat_reason = "no_lifes" if instance.vidas == 0 else "no_time"
-                current_game["defeat_reason"] = defeat_reason
+            defeat_reason = "no_lifes" if instance.vidas == 0 else "no_time"
+            current_game["defeat_reason"] = defeat_reason
 
         return current_game, 200
 
@@ -111,17 +114,24 @@ def current_game(game_id):
 
         if not instance.partida_en_juego():
             return {"error": "Game has ended"}, 403
+        
+        if key in current_game["used_chars"]:
+            return {"error": f"Char {key} has already been used"}, 403
+
+        current_game["used_chars"].append(key)
 
         if instance.letra_pertenece(key):
             instance.reemplazar_letra(key)
         else:
             instance.restar_vidas()
+        
 
         instance.actualizar_estado_juego()
 
         if instance.estado == instance.ESTADOS["VICTORIA"]:
             game_finished_in = datetime.now()
-            resolution_time = int((game_finished_in - game_started_in).total_seconds())
+            resolution_time = int(
+                (game_finished_in - game_started_in).total_seconds())
             mm = resolution_time // 60
             ss = resolution_time % 60
             resolution_time = "{:02}:{:02}".format(mm, ss)

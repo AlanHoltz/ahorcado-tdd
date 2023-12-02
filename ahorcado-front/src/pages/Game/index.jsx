@@ -10,8 +10,17 @@ import { Modal } from 'react-responsive-modal';
 const Game = () => {
 
     const getKeys = () => {
+        if (!session) return;
+        console.log(session)
         const keys = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-        return keys.map(key => (<div key={`key_${key}`} onClick={() => handleKeyClick(key)} className="key">{key.toUpperCase()}</div>));
+        return keys.map(key =>
+        (<div
+            key={`key_${key}`}
+            onClick={() => handleKeyClick(key)}
+            className={`key${session.used_chars.includes(key) ? " used_key" : ""}`}>
+            {key.toUpperCase()}
+        </div>
+        ));
     };
 
     const getCharacters = () => {
@@ -41,7 +50,7 @@ const Game = () => {
         try {
             let session = await axios.get(`${BACKEND_BASEURL}/current_game/${session_id}`);
             setSession({ ...session.data })
-            if(session.data.instance.estado !== 0) onGameEnds(session);
+            if (session.data.instance.estado !== 0) onGameEnds(session);
             return session
         } catch (error) {
             navigate("/")
@@ -81,12 +90,12 @@ const Game = () => {
     </svg>;
 
     const back_icon = <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-caret-left-fill" viewBox="0 0 16 16">
-    <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
-  </svg>;
+        <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" />
+    </svg>;
 
 
     const onGameEnds = async (session) => {
-        
+
         setFinishedGame(true);
     };
 
@@ -95,12 +104,12 @@ const Game = () => {
         curr_sess = curr_sess.data;
         onGameEnds(curr_sess);
     };
-    
+
     const DEFEAT_PHRASES = {
         "no_time": "Se te ha acabado el tiempo",
         "no_lifes": "Te has quedado sin vidas",
     }
-    
+
     const onBackClick = async () => {
         await axios.delete(`${BACKEND_BASEURL}/delete_game/${session_id}`);
         navigate("/");
@@ -108,7 +117,7 @@ const Game = () => {
 
     return (
         <section className="container game">
-            {/* <button className="button leave_game_button">{quit_icon}</button> */}
+            <button onClick={onBackClick} className="button leave_game_button">{quit_icon}</button>
             {session && <div className="hangman_status">
                 <img className="shape" src={`${process.env.PUBLIC_URL}/hangman_phases/${session["instance"].vidas}.png`} alt="Hangman Shape" />
                 <Countdown
@@ -128,10 +137,12 @@ const Game = () => {
                 overlay: 'custom_overlay',
                 modal: 'custom_modal',
             }}
-            styles={{"modal": {
-                background: session?.instance.estado === -1 ? "rgb(188, 26, 26)" : "rgb(28, 179, 83)"
-            }}}
-            closeOnOverlayClick={false} closeOnEsc={false} showCloseIcon={false} open={finishedGame} center>
+                styles={{
+                    "modal": {
+                        background: session?.instance.estado === -1 ? "rgb(188, 26, 26)" : "rgb(28, 179, 83)"
+                    }
+                }}
+                closeOnOverlayClick={false} closeOnEsc={false} showCloseIcon={false} open={finishedGame} center>
                 <button onClick={onBackClick} className="button modal_back_button">{back_icon} <p>Volver</p></button>
                 <h1 className="modal_title">{session?.instance.estado === -1 ? "HAS PERDIDO!" : "HAS GANADO!"}</h1>
                 <h3>{session?.instance.estado === -1 ? DEFEAT_PHRASES[session.defeat_reason] : ""}</h3>

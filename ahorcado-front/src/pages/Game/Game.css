@@ -50,6 +50,7 @@
     background: rgb(173, 172, 172);
     display: flex;
     align-items: center;
+    user-select: none;
     justify-content: center;
     font-size: 1.5em;
     border-radius: .30em;
@@ -79,6 +80,12 @@
     font-weight: bold;
     user-select: none;
     transition: all .1s ease;
+}
+
+.game .hangman_keys .used_key {
+    pointer-events: none;
+    opacity: .6;
+    box-shadow: none;
 }
 
 .game .hangman_keys .key:active {
