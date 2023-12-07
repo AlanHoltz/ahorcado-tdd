@@ -36,7 +36,7 @@ Feature: Ahorcado
         And Ingreso la letra "E"
         And Ingreso la letra "F"
         And Ingreso la letra "G"
-        And Ingreso la letra "H"
+        And Ingreso la letra "Z"
         And Ingreso la letra "I"
         And Ingreso la letra "J"
         And Ingreso la letra "K"
