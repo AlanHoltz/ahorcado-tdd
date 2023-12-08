@@ -5,28 +5,28 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
-@when(u'Inicio nuevo juego')
-def step_impl(context):
-    try:
-        if len(context.driver.find_elements(By.XPATH, '//*[contains(@class, "modal_back_button")]')) > 0:
+def setUp(context):
+    if len(context.driver.find_elements(By.XPATH, '//*[contains(@class, "modal_back_button")]')) > 0:
             context.driver.find_element(By.XPATH, '//*[contains(@class, "modal_back_button")]').click()
             boton_iniciar_juego = WebDriverWait(context.driver, 10).until(
             EC.visibility_of_element_located((By.XPATH, '//button[text()="Nuevo Juego"]')))
             boton_iniciar_juego.click()
-        else:
-            boton_iniciar_juego = WebDriverWait(context.driver, 10).until(
-            EC.visibility_of_element_located((By.XPATH, '//button[text()="Nuevo Juego"]')))
-            boton_iniciar_juego.click()
+    if len(context.driver.find_elements(By.XPATH, '//*[contains(@class, "leave_game_button")]')) > 0:
+        context.driver.find_element(By.XPATH, '//*[contains(@class, "leave_game_button")]').click()
+        boton_iniciar_juego = WebDriverWait(context.driver, 10).until(
+        EC.visibility_of_element_located((By.XPATH, '//button[text()="Nuevo Juego"]')))
+        boton_iniciar_juego.click()
+
+@when(u'Inicio nuevo juego')
+def step_impl(context):
+    try:
+        setUp(context)
     except:
         pass
-    # if(context.driver.find_element(By.XPATH, '//*[contains(@class, "modal_back_button")]') is not None):
-    # boton_volver = WebDriverWait(context.driver, 10).until(
-    #     EC.element_to_be_clickable((By.XPATH, '//*[contains(@class, "modal_back_button")]')))
-    # boton_volver.click()
-    # boton_iniciar_juego = WebDriverWait(context.driver, 10).until(
-    #     EC.visibility_of_element_located((By.XPATH, '//button[text()="Nuevo Juego"]'))
-    # )
-    # boton_iniciar_juego.click()
+    finally:
+        boton_iniciar_juego = WebDriverWait(context.driver, 10).until(
+            EC.visibility_of_element_located((By.XPATH, '//button[text()="Nuevo Juego"]')))
+        boton_iniciar_juego.click()
 
 @when(u'Salgo del juego')
 def step_impl(context):

@@ -36,12 +36,6 @@ Feature: Ahorcado
         And Ingreso la letra "E"
         And Ingreso la letra "F"
         And Ingreso la letra "G"
-        And Ingreso la letra "Z"
-        And Ingreso la letra "I"
-        And Ingreso la letra "J"
-        And Ingreso la letra "K"
-        And Ingreso la letra "M"
-        And Ingreso la letra "P"
         Then Se muestra pantalla de derrota
         Then El numero de intentos es "6"
         Then La cantidad de vidas restantes es "0"
