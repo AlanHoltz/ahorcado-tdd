@@ -19,22 +19,23 @@ locators = {
     "tituloModalFinJuego": (By.XPATH, '//h1[@class="modal_title"]'),
     "numeroIntentos": lambda numero_intentos: (By.XPATH, '//ul[@class="modal_status"]//li[3][text()="%s"]' % numero_intentos),
     "vidasRestantes": lambda vidas_restantes: (By.XPATH, '//ul[@class="modal_status"]//li[4][text()="%s"]' % vidas_restantes),
-    "botonVolver": (By.XPATH, '//*[contains(@class, "modal_back_button")]')
+    "botonVolver": (By.XPATH, '//*[contains(@class, "modal_back_button")]'),
+    "figuraAhorcado": lambda vidas_restantes: (By.XPATH, '//img[@src="/hangman_phases/%s.png"]' %vidas_restantes)
 }
 
 
-def click_button(context, locator):
+def wait_and_click_button(context, locator):
     button = WebDriverWait(context.driver, 10).until(
         EC.visibility_of_element_located(locator))
     button.click()
 
 def setUp(context):
     if context.driver.find_elements(*locators["botonVolver"]):
-        click_button(context, locators["botonVolver"])
-        click_button(context, locators["botonNuevoJuego"])
+        wait_and_click_button(context, locators["botonVolver"])
+        wait_and_click_button(context, locators["botonNuevoJuego"])
     if context.driver.find_elements(*locators["botonSalirJuego"]):
-        click_button(context, locators["botonSalirJuego"])
-        click_button(context, locators["botonNuevoJuego"])
+        wait_and_click_button(context, locators["botonSalirJuego"])
+        wait_and_click_button(context, locators["botonNuevoJuego"])
 
 @when(u'Inicio nuevo juego')
 def step_impl(context):
@@ -43,23 +44,15 @@ def step_impl(context):
     except:
         pass
     finally:
-        boton_iniciar_juego = WebDriverWait(context.driver, 10).until(
-            EC.visibility_of_element_located(locators["botonNuevoJuego"]))
-        boton_iniciar_juego.click()
+        wait_and_click_button(context, locators["botonNuevoJuego"])
 
 @when(u'Salgo del juego')
 def step_impl(context):
-    boton_salir = WebDriverWait(context.driver, 10).until(
-        EC.element_to_be_clickable(locators["botonSalirJuego"])
-    )
-    boton_salir.click()
+    wait_and_click_button(context, locators["botonSalirJuego"])
 
 @when('Ingreso la letra "{letra}"')
 def step_impl(context, letra):
-    boton_letra = WebDriverWait(context.driver, 10).until(
-        EC.element_to_be_clickable(locators["botonLetra"](letra))
-    )
-    boton_letra.click()
+    wait_and_click_button(context, locators["botonLetra"](letra))
     WebDriverWait(context.driver, 3).until(
         EC.visibility_of_element_located(locators["botonLetraUsada"](letra))
     )
@@ -107,3 +100,21 @@ def step_impl(context, vidas_restantes):
    boton_volver.click()
    WebDriverWait(context.driver, 10).until(
         EC.visibility_of_element_located(locators["botonNuevoJuego"]))
+
+
+@then(u'La figura de ahorcado mostrada es "{figura}"')
+def step_impl(context, figura):
+    figuras_ahorcado = {
+            "Soporte": 6,
+            "Cabeza": 5,
+            "Torso": 4,
+            "Brazo Izquierdo": 3,
+            "Brazo Derecho": 2,
+            "Pierna Izquierda": 1,
+            "Pierna Derecha": 0
+        }
+    print("FOSIANDYYPSDYOSBYGOG", figuras_ahorcado[figura])
+    figura_correcta_ahorcado = WebDriverWait(context.driver, 10).until(
+        EC.visibility_of_element_located(locators["figuraAhorcado"](figuras_ahorcado[figura]))
+    )
+    assert figura_correcta_ahorcado.is_displayed()
