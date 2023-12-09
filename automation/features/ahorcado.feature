@@ -12,8 +12,8 @@ Feature: Ahorcado
         And Ingreso la letra "L"
         And Ingreso la letra "A"
         Then Se muestra pantalla de victoria
-        Then El numero de intentos es "4"
-        Then La cantidad de vidas restantes es "6"
+        And El numero de intentos es "4"
+        And La cantidad de vidas restantes es "6"
 
     Scenario: Ganar juego con fallos
         When Inicio nuevo juego
@@ -25,8 +25,8 @@ Feature: Ahorcado
         And Ingreso la letra "N"
         And Ingreso la letra "A"
         Then Se muestra pantalla de victoria
-        Then El numero de intentos es "7"
-        Then La cantidad de vidas restantes es "3"
+        And El numero de intentos es "7"
+        And La cantidad de vidas restantes es "3"
 
     Scenario: Perder juego
         When Inicio nuevo juego
@@ -37,8 +37,8 @@ Feature: Ahorcado
         And Ingreso la letra "F"
         And Ingreso la letra "G"
         Then Se muestra pantalla de derrota
-        Then El numero de intentos es "6"
-        Then La cantidad de vidas restantes es "0"
+        And El numero de intentos es "6"
+        And La cantidad de vidas restantes es "0"
         
 
 
