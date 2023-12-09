@@ -65,21 +65,16 @@ def step_impl(context):
    
    assert titulo.text == "Ahorcado"
    
-@then(u'Se muestra pantalla de victoria')
-def step_impl(context):
-   titulo_modal = WebDriverWait(context.driver, 10).until(
+@then(u'Se muestra el modal de "{resultado_juego}"')
+def step_impl(context, resultado_juego):
+    titulo_modal_por_estado = {
+            "Victoria": "HAS GANADO!",
+            "Derrota": "HAS PERDIDO!"
+        }
+    titulo_modal = WebDriverWait(context.driver, 10).until(
         EC.visibility_of_element_located(locators["tituloModalFinJuego"])
     )
-   
-   assert titulo_modal.text == "HAS GANADO!"
-   
-@then(u'Se muestra pantalla de derrota')
-def step_impl(context):
-   titulo_modal = WebDriverWait(context.driver, 10).until(
-        EC.visibility_of_element_located(locators["tituloModalFinJuego"])
-    )
-   
-   assert titulo_modal.text == "HAS PERDIDO!"
+    assert titulo_modal.text == titulo_modal_por_estado[resultado_juego]
    
 @then(u'El numero de intentos es "{numero_intentos}"')
 def step_impl(context, numero_intentos):
@@ -113,7 +108,6 @@ def step_impl(context, figura):
             "Pierna Izquierda": 1,
             "Pierna Derecha": 0
         }
-    print("FOSIANDYYPSDYOSBYGOG", figuras_ahorcado[figura])
     figura_correcta_ahorcado = WebDriverWait(context.driver, 10).until(
         EC.visibility_of_element_located(locators["figuraAhorcado"](figuras_ahorcado[figura]))
     )

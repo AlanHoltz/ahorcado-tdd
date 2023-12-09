@@ -11,7 +11,7 @@ Feature: Jugabilidad ahorcado
         And Ingreso la letra "O"
         And Ingreso la letra "L"
         And Ingreso la letra "A"
-        Then Se muestra pantalla de victoria
+        Then Se muestra el modal de "Victoria"
         And El numero de intentos es "4"
         And La cantidad de vidas restantes es "6"
 
@@ -24,7 +24,7 @@ Feature: Jugabilidad ahorcado
         And Ingreso la letra "R"
         And Ingreso la letra "N"
         And Ingreso la letra "A"
-        Then Se muestra pantalla de victoria
+        Then Se muestra el modal de "Victoria"
         And El numero de intentos es "7"
         And La cantidad de vidas restantes es "3"
 
@@ -36,7 +36,7 @@ Feature: Jugabilidad ahorcado
         And Ingreso la letra "E"
         And Ingreso la letra "F"
         And Ingreso la letra "G"
-        Then Se muestra pantalla de derrota
+        Then Se muestra el modal de "Derrota"
         And El numero de intentos es "6"
         And La cantidad de vidas restantes es "0"
         
