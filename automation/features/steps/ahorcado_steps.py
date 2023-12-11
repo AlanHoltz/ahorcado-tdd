@@ -11,7 +11,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 
 
-# Locators
+# Locators 
 locators = {
     "botonNuevoJuego": (By.XPATH, '//button[text()="Nuevo Juego"]'),
     "botonSalirJuego": (By.XPATH, '//*[contains(@class, "leave_game_button")]'),
