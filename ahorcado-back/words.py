@@ -1,4 +1,8 @@
-WORDS = [
+WORDS_TESTING = [
+    "HOLA"
+]
+
+WORDS_PRODUCTION = [
     "MEDALLA",
     "ABURRIMIENTO",
     "CUCURUCHO",
@@ -28,5 +32,5 @@ WORDS = [
     "ALPINISTA",
     "RADIOAFICIONADO",
     "TROMPETA",
-    "ESPECULAR",
+    "ESPECULAR"
 ]

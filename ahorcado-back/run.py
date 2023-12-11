@@ -5,14 +5,17 @@ from datetime import datetime, timedelta
 from ahorcado import Ahorcado
 from flask_cors import CORS
 from datetime import datetime
-from words import WORDS
+from words import WORDS_TESTING, WORDS_PRODUCTION
 from random import choice
+
+
+
 
 app = Flask(__name__)
 CORS(app)
 
 PLAYING_TIME = 10
-
+TESTING = True
 
 @app.route("/new_game", methods=["POST"])
 def new_game():
@@ -25,7 +28,7 @@ def new_game():
     if len(ip_sessions) != 0:
         return {"error": "You can't have more than one running session"}, 403
 
-    instance = Ahorcado(choice(WORDS).lower())
+    instance = Ahorcado(choice(WORDS_TESTING if TESTING else WORDS_PRODUCTION).lower())
 
     new_game_obj = {
         'startedIn': datetime.now().isoformat(),
