@@ -9,16 +9,20 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        python-version: [3.8]
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Set up Python
+    - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
       with:
-        python-version: 3.8
+        python-version: ${{ matrix.python-version }}
 
-    - name: Run unittest
+    - name: Run unittests
       run: python ahorcado-back/ahorcado_unittests.py
     
     - name: Generate Code Coverage Report
@@ -29,8 +33,6 @@ jobs:
     - name: Upload Coverage to Codecov
       uses: codecov/codecov-action@v2
 
-
-      
   sonarcloud:
       name: SonarCloud
       runs-on: ubuntu-latest
@@ -45,7 +47,7 @@ jobs:
             SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   autotests:
-    name: Run tests and generate Allure Report
+    name: Run tests and generate Report
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -61,30 +63,20 @@ jobs:
           pip install -r requirements.txt
 
 
-      - name: Run Test
-        if: always()
-        run: behave -f allure_behave.formatter:AllureFormatter -o automation/reports automation/features
-        continue-on-error: true
+      - name: Activate Virtual Environment and run backend
+        shell: pwsh
+        run: |
+              .\venv\Scripts\Activate.ps1
+              cd ahorcado-back
+              py run.py 
 
-      - name: Get Allure history
-        uses: actions/checkout@v3
-        if: always()
-        continue-on-error: true
-        with:
-          ref: gh-pages
-          path: gh-pages
-
-      - name: Allure Report action from marketplace
-        uses: simple-elf/allure-report-action@v1.7
-        if: always()
-        with:
-          allure_results: automation/reports
-          allure_history: automation/reports
-
-      - name: Deploy report to Github Pages
-        if: always()
-        uses: peaceiris/actions-gh-pages@v2
-        env:
-          PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PUBLISH_BRANCH: gh-pages
-          PUBLISH_DIR: automation/reports
+      - name: Install Front-End Dependencies and run
+        shell: pwsh
+        run: |
+          cd ahorcado-front
+          npm install
+          npm start
+    
+      - name: Run UI Tests
+        shell: pwsh
+        run: behave automation/features

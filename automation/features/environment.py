@@ -6,7 +6,9 @@ import time
 
 
 def before_scenario(context, scenario):
-    context.driver = webdriver.Chrome()
+    options = webdriver.ChromeOptions()
+    options.add_argument("--headless")
+    context.driver = webdriver.Chrome(options=options)
     context.driver.maximize_window()
     context.driver.get("http://localhost:3000/")
     time.sleep(1)
