@@ -17,5 +17,5 @@ jobs:
         USERNAME: ${{ secrets.USERNAME }}
         PORT: ${{ secrets.PORT }}
         KEY: ${{ secrets.SSHKEY }}
-        PASSPHRASE: ${{ secrest.PASSPHRASE }}
+        PASSPHRASE: ${{ secrets.PASSPHRASE }}
         script: touch hola.txt
