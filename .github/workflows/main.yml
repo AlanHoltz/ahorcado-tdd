@@ -63,10 +63,9 @@ jobs:
           pip install -r requirements.txt
 
 
-      - name: Activate Virtual Environment and run backend
+      - name: Run backend
         shell: pwsh
         run: |
-              .\venv\Scripts\Activate.ps1
               cd ahorcado-back
               py run.py 
 
