@@ -15,6 +15,7 @@ py run.py
 ## Levantar Front-End
 ```bash
 cd ahorcado-front
+npm install
 npm start
 ```
 
