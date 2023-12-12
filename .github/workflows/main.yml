@@ -67,7 +67,7 @@ jobs:
         shell: pwsh
         run: |
               cd ahorcado-back
-              py run.py 
+              python run.py 
 
       - name: Install Front-End Dependencies and run
         shell: pwsh
