@@ -15,7 +15,7 @@ class Test(unittest.TestCase):
       self.assertEqual(ahorcado.slots, "p _ _ _ _ _ _")
    
    def test_arriesgar_letra_multiple_y_acertar(self):
-      ahorcado = Ahorcado("pssss")
+      ahorcado = Ahorcado("palabra")
       ahorcado.arriesgar_letra("a")
       self.assertEqual(ahorcado.slots, "_ a _ a _ _ a")
 

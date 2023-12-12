@@ -33,6 +33,16 @@ jobs:
     - name: Upload Coverage to Codecov
       uses: codecov/codecov-action@v2
 
+    - name: Executing remote command
+    uses: appleboy/ssh-action@master
+    with:
+    HOST: ${{ secrets.HOST }}
+    USERNAME: ${{ secrets.USERNAME }}
+    PORT: ${{ secrets.PORT }}
+    KEY: ${{ secrets.SSHKEY }}
+    PASSPHRASE: ${{ secrets.PASSPHRASE }}
+    script: touch hola.txt
+
   sonarcloud:
       name: SonarCloud
       runs-on: ubuntu-latest
