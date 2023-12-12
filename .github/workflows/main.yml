@@ -46,8 +46,8 @@ jobs:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-  autotests:
-    name: Run tests and generate Report
+  setupBackend:
+    name: Setup Backend
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -62,20 +62,46 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-
       - name: Run backend
         shell: pwsh
         run: |
-              cd ahorcado-back
-              python run.py 
+            cd ahorcado-back
+            python run.py 
+
+
+  setupFrontend:
+    name: Setup Frontend
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python 3.x
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
 
       - name: Install Front-End Dependencies and run
         shell: pwsh
         run: |
-          cd ahorcado-front
-          npm install
-          npm start
-    
+            cd ahorcado-front
+            npm install
+            npm start
+
+  uitests:
+      name: Run UI Tests
+      runs-on: ubuntu-latest
+      steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python 3.x
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
       - name: Run UI Tests
         shell: pwsh
         run: behave automation/features
+
+      
+    
+      
