@@ -45,7 +45,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           
-  deploy_and_UI_tests:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Executing remote command
@@ -58,11 +58,23 @@ jobs:
           PASSPHRASE: ${{ secrets.PASSPHRASE }}
           script: bash execute.bash
 
-      - name: Install dependencies
-        run: |
+  uitests:
+    needs: deploy
+    name: Checkout
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python 3.x
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           
-      - name: Run UI Tests
-        shell: pwsh
-        run: behave automation/features
+    - name: Run UI Tests
+      shell: pwsh
+      run: behave automation/features
