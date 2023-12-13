@@ -1,10 +1,13 @@
+@high_priority
 Feature: Jugabilidad ahorcado
 
+    @regression @functionality
     Scenario: Salir del juego
         When Inicio nuevo juego
         And Salgo del juego
         Then Estoy en la página inicial
 
+    @regression @functionality
     Scenario: Ganar juego sin fallos
         When Inicio nuevo juego
         And Ingreso la letra "H"
@@ -15,6 +18,7 @@ Feature: Jugabilidad ahorcado
         And El numero de intentos es "4"
         And La cantidad de vidas restantes es "6"
 
+    @functionality
     Scenario: Ganar juego con fallos
         When Inicio nuevo juego
         And Ingreso la letra "H"
@@ -28,6 +32,7 @@ Feature: Jugabilidad ahorcado
         And El numero de intentos es "7"
         And La cantidad de vidas restantes es "3"
 
+    @regression @functionality
     Scenario: Perder juego
         When Inicio nuevo juego
         And Ingreso la letra "B"
@@ -39,7 +44,8 @@ Feature: Jugabilidad ahorcado
         Then Se muestra el modal de "Derrota"
         And El numero de intentos es "6"
         And La cantidad de vidas restantes es "0"
-        
+    
+    @ui
     Scenario: Verificar figura de ahorcado
         When Inicio nuevo juego
         Then La figura de ahorcado mostrada es "Soporte"
