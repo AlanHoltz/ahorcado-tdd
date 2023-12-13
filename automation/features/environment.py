@@ -10,7 +10,7 @@ def before_scenario(context, scenario):
     options.add_argument("--headless")
     context.driver = webdriver.Chrome(options=options)
     context.driver.maximize_window()
-    context.driver.get("http://localhost:3000/")
+    context.driver.get("http://34.176.37.34/")
     time.sleep(1)
     
 def after_scenario(context, scenario):
