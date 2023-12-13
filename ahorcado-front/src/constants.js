@@ -1,3 +1,3 @@
-const BACKEND_BASEURL = "http://localhost:4000";
+const BACKEND_BASEURL = "http://34.176.37.34";
 
 export {BACKEND_BASEURL}
