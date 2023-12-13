@@ -37,7 +37,7 @@ const Main = () => {
         <section className="container main">
             <div className="box">
                 <h1>Ahorcado</h1>
-                <button onClick={newGame} className="button animated_button">Cambiando el contenido del botón para probar</button>
+                <button onClick={newGame} className="button animated_button">Nuevo Juego</button>
             </div>
         </section>
     )
