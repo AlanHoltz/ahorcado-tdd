@@ -56,4 +56,4 @@ jobs:
           PORT: ${{ secrets.PORT }}
           KEY: ${{ secrets.SSHKEY }}
           PASSPHRASE: ${{ secrets.PASSPHRASE }}
-          script: touch hola.txt
+          script: bash execute.bash
