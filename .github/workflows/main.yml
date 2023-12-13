@@ -74,30 +74,30 @@ jobs:
           PASSPHRASE: ${{ secrets.PASSPHRASE }}
           script: bash execute.bash
 
-  uitests:
-    needs: deploy
-    name: Run UI Tests
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
+  # uitests:
+  #   needs: deploy
+  #   name: Run UI Tests
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: actions/checkout@v3
 
-    - name: Set up Python 3.x
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.x'
+  #   - name: Set up Python 3.x
+  #     uses: actions/setup-python@v2
+  #     with:
+  #       python-version: '3.x'
 
-    - name: Install dependencies
-      run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+  #   - name: Install dependencies
+  #     run: |
+  #         python -m pip install --upgrade pip
+  #         pip install -r requirements.txt
           
-    - name: Run UI Tests
-      shell: pwsh
-      run: behave automation/features
+  #   - name: Run UI Tests
+  #     shell: pwsh
+  #     run: behave automation/features
 
   allure:
-    needs: uitests
-    name: Run tests and generate Allure Report
+    needs: deploy
+    name: Run UI tests and generate Allure Report
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
