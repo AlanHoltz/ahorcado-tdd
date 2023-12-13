@@ -96,6 +96,7 @@ jobs:
       run: behave automation/features
 
   allure:
+    needs: uitests
     name: Run tests and generate Allure Report
     runs-on: ubuntu-latest
     steps:
