@@ -53,7 +53,7 @@ Feature: Jugabilidad ahorcado
         Then La figura de ahorcado mostrada es "Soporte"
         When Ingreso la letra "C"
         Then La figura de ahorcado mostrada es "Cabeza"
-        When Ingreso la letra "P"
+        When Ingreso la letra "L"
         Then La figura de ahorcado mostrada es "Torso"
         When Ingreso la letra "E"
         Then La figura de ahorcado mostrada es "Brazo Izquierdo"
