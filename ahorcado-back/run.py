@@ -15,7 +15,7 @@ app = Flask(__name__)
 CORS(app)
 
 PLAYING_TIME = 10
-TESTING = True
+TESTING = False
 
 @app.route("/new_game", methods=["POST"])
 def new_game():
