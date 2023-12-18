@@ -1,0 +1,6 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"failed","Mon Dec 18 21:04:19 GMT 2023","Mon Dec 18 21:04:29 GMT 2023","10014","","","","","","Ganar juego con fallos",""
+"broken","Mon Dec 18 21:04:01 GMT 2023","Mon Dec 18 21:04:19 GMT 2023","17379","","","","","","Ganar juego sin fallos",""
+"broken","Mon Dec 18 21:04:29 GMT 2023","Mon Dec 18 21:04:48 GMT 2023","19627","","","","","","Perder juego",""
+"passed","Mon Dec 18 21:03:55 GMT 2023","Mon Dec 18 21:04:01 GMT 2023","5994","","","","","","Salir del juego",""
+"broken","Mon Dec 18 21:04:48 GMT 2023","Mon Dec 18 21:05:06 GMT 2023","17412","","","","","","Verificar figura de ahorcado",""
